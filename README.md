@@ -1,10 +1,7 @@
-# Physics Engine
+# Multiplayer Game Server
 
-A physics subsystem built on the [XCube2D] game engine, written in C++
-using [SDL2]. This subsystem implements both linear and angular rigid body dynamics along with
-collision detection and response. 
-
-![physics-engine_demo](https://github.com/user-attachments/assets/a6392518-67f1-4fea-b134-31343d658452)
+A multiplayer game server built on the [XCube2D] game engine, written in C++
+using [SDL2].
 
 ## Dependencies
 
@@ -23,8 +20,8 @@ You can also follow the [vcpkg] instructions for [Windows](#windows) on other pl
 
 1. **Clone the Repository:**
     ```shell
-    git clone https://github.com/harryjduke/physics-engine_CI517.git
-    cd physics-engine_CI517
+    git clone https://github.com/harryjduke/.git
+    cd multipler-game_server
     ``` 
 2. **Install prerequisites**
     - [Install Git](https://git-scm.com/downloads/win) if not already installed.
@@ -98,8 +95,8 @@ You can also follow the [vcpkg] instructions for [Windows](#windows) on other pl
 2. Clone and build the project:
     ```shell
     # clone this repository
-    git clone https://github.com/harryjduke/physics-engine_ci517.git
-    cd physics-engine_ci517
+    git clone https://github.com/harryjduke/multiplayer-game_server.git
+    cd multiplayer-game_server
 
     # build
     mkdir build
@@ -111,16 +108,6 @@ You can also follow the [vcpkg] instructions for [Windows](#windows) on other pl
     ./bin/MyGame.exe
     ```
 
-## Usage
-
-- The game is created by extending the `AbstractGame` class. `AbstractGame::runMainLoop()` starts the game.
-- To create a `RigidBody` pass a shared pointer to the `RigidBody` to the `PhysicsEngine::registerRigidBody()` method.
-  A pointer to the game's `PhysicsEngine` is stored in `AbstractGame::physicsEngine`.
-```cpp
-const auto rigidBody = std::make_shared<RigidBody>(Vector2F{1000, 400}, 50, 50);
-physicsEngine->registerRigidBody(rigidBody);
-```
-
 ## Licence
 
 Distributed under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) license.
@@ -129,14 +116,6 @@ See [LICENCE.txt](LICENSE) for more information.
 ## Credits
 
 - **[XCube2D](https://github.com/AlmasB/xcube2d)** - The base game engine for this subsystem.
-- **Collision Detection**: 
-  - [Collision Detection Using the Separating Axis Theorem - Kah Shiu Chong](https://code.tutsplus.com/collision-detection-using-the-separating-axis-theorem--gamedev-169t)
-  - [Linear Collision Resolution in 2D Game Physics - pikuma](https://www.youtube.com/watch?v=1L2g4ZqmFLQ)
-- **Physics Calculations**: 
-  - [Physics articles (Parts 1, 2 & 3) - Chris Hecker](https://www.chrishecker.com/Rigid_Body_Dynamics)
-- **Moment of Inertia**: 
-  - [Moments of Inertia for Triangles and other Polygons - Robert Fotino](https://fotino.me/moment-of-inertia-algorithm/)
-  - [Calculating the moment of inertia of a triangle - Matt Anderson](https://www.youtube.com/watch?v=yEa8npNVejg)
 
 [XCube2D]: https://github.com/AlmasB/xcube2d
 

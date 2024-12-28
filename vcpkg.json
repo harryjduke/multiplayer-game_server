@@ -1,5 +1,5 @@
 {
-  "name": "physics-engine",
+  "name": "multiplayer-game-server",
   "version": "0.1.0",
   "dependencies": [
     {
@@ -8,5 +8,6 @@
     {
       "name": "sdl2-image"
     }
-  ]
+  ],
+  "builtin-baseline": "e60236ee051183f1122066bee8c54a0b47c43a60"
 }

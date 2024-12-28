@@ -15,16 +15,16 @@ else ()
 endif ()
 
 # Setup project
-project(physics-engine)
+project(multiplayer-game_server)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
-# Setup game
-set(GAME_NAME "MyGame")
+# Setup server
+set(SERVER_NAME "server")
 
 # Setup build output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${physics-engine_BINARY_DIR}/bin")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${physics-engine_BINARY_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/bin")
 
 # --- DEPENDENCIES ---
 if (EXISTS "${CMAKE_SOURCE_DIR}/libs")
@@ -37,9 +37,9 @@ find_package(SDL2_image CONFIG REQUIRED)
 
 # --- SUBDIRECTORIES ---
 add_subdirectory(engine)
-add_subdirectory(game)
+add_subdirectory(server)
 
 # Set startup project (for visual studio solution generation)  ---
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${GAME_NAME})
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${SERVER_NAME})
 endif ()

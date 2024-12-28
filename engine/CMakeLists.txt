@@ -2,16 +2,15 @@
 add_library(Engine
         src/XCube2d.cpp
         include/XCube2d.h
-        src/AbstractGame.cpp
-        include/AbstractGame.h
+        src/AbstractServer.cpp
+        include/AbstractServer.h
         include/utils/EngineCommon.h
         include/utils/GameMath.h
         src/EventEngine.cpp
         include/EventEngine.h
         src/GraphicsEngine.cpp
         include/GraphicsEngine.h
-        src/PhysicsEngine.cpp
-        include/PhysicsEngine.h
+        include/NetworkEngine.h
 )
 
 # Specify the include directories for the 'Engine' target

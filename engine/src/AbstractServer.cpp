@@ -1,57 +1,65 @@
+// This file is part of multiplayer-game_server <https://github.com/harryjduke/multiplayer-game_server>.
+// Copyright (c) 2024 Harry Duke <harryjduke@gmail.com>
+// This file includes modifications made by Harry Duke.
+//
+// This program is distributed under the terms of the GNU General Public License version 2.
+// You should have received a copy of the GNU General Public License along with this program.
+// If not, see <https://github.com/harryjduke/multiplayer-game_server/blob/main/LICENSE> or <https://www.gnu.org/licenses/>.
 
 //
-//  AbstractGame.cpp
+//  AbstractServer.cpp
 //  GameEngineBase
 // all code resources are taken from https://github.com/AlmasB/xcube2d/tree/master
 //
 
-#include "AbstractGame.h"
-
-#include <iostream>
-
+#include "AbstractServer.h"
 #include "utils/EngineCommon.h"
 
 using namespace std;
 
-AbstractGame::AbstractGame() : running(true), paused(false), gameTime(0.0)
+AbstractServer::AbstractServer() : running(true), paused(false), serverTime(0.0)
 {
-    std::shared_ptr<XCube2Engine> engine = XCube2Engine::getInstance();
+    const std::shared_ptr<XCube2Engine> engine = XCube2Engine::getInstance();
 
+#ifdef __DEBUG
     graphicsEngine = engine->getGraphicsEngine();
     eventEngine = engine->getEventEngine();
-    physicsEngine = engine->getPhysicsEngine();
+#endif
 }
 
-AbstractGame::~AbstractGame()
+AbstractServer::~AbstractServer()
 {
 #ifdef __DEBUG
-    debug("AbstractGame::~AbstractGame() started");
+    debug("AbstractServer::~AbstractServer() started");
 #endif
 
+
+#ifdef __DEBUG
     // kill Game class' instance pointers
     // so that engine is isolated from the outside world
     // before shutting down
     graphicsEngine.reset();
     eventEngine.reset();
-    physicsEngine.reset();
+#endif
 
     // kill engine
     XCube2Engine::quit();
 
 #ifdef __DEBUG
-    debug("AbstractGame::~AbstractGame() finished");
+    debug("AbstractServer::~AbstractServer() finished");
     debug("The game finished and cleaned up successfully. Press Enter to exit");
     getchar();
 #endif
 }
 
-int AbstractGame::runMainLoop() {
+int AbstractServer::runMainLoop() {
 #ifdef __DEBUG
     debug("Entered Main Loop");
 #endif
 
     while (running)
     {
+#ifdef __DEBUG
         graphicsEngine->setFrameStart();
         eventEngine->pollEvents();
 
@@ -60,19 +68,22 @@ int AbstractGame::runMainLoop() {
 
         handleKeyEvents();
         handleMouseEvents();
+#endif
+
 
         if (!paused) {
-            float deltaTime = 0.016;	// 60 times a sec
+            constexpr float deltaTime = 0.016;	// 60 times a sec
             update(deltaTime);
-            updatePhysics(deltaTime);
-            gameTime += deltaTime;
+            serverTime += deltaTime;
         }
 
+#ifdef __DEBUG
         graphicsEngine->clearScreen();
         render();
         graphicsEngine->showScreen();
 
         graphicsEngine->adjustFPSDelay(16);	// atm hardcoded to ~60 FPS
+#endif
     }
 
 #ifdef __DEBUG
@@ -82,19 +93,18 @@ int AbstractGame::runMainLoop() {
     return 0;
 }
 
-void AbstractGame::handleMouseEvents() {
+
+#ifdef __DEBUG
+void AbstractServer::handleMouseEvents() {
     if (eventEngine->isPressed(Mouse::BTN_LEFT)) onLeftMouseButton();
     if (eventEngine->isPressed(Mouse::BTN_RIGHT)) onRightMouseButton();
 }
 
-void AbstractGame::onLeftMouseButton() {
+void AbstractServer::onLeftMouseButton() {
 
 }
 
-void AbstractGame::onRightMouseButton() {
+void AbstractServer::onRightMouseButton() {
 
 }
-
-void AbstractGame::updatePhysics(float deltaTime) {
-    physicsEngine->update(deltaTime);
-}
+#endif

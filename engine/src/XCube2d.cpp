@@ -1,3 +1,10 @@
+// This file is part of multiplayer-game_server <https://github.com/harryjduke/multiplayer-game_server>.
+// Copyright (c) 2024 Harry Duke <harryjduke@gmail.com>
+// This file includes modifications made by Harry Duke.
+//
+// This program is distributed under the terms of the GNU General Public License version 2.
+// You should have received a copy of the GNU General Public License along with this program.
+// If not, see <https://github.com/harryjduke/multiplayer-game_server/blob/main/LICENSE> or <https://www.gnu.org/licenses/>.
 
 //
 //  XCube2d.cpp
@@ -28,24 +35,16 @@ XCube2Engine::XCube2Engine()
         #endif
     #endif
 
-    graphicsEngine = std::shared_ptr<GraphicsEngine>(new GraphicsEngine());
 
 #ifdef __DEBUG
+    graphicsEngine = std::shared_ptr<GraphicsEngine>(new GraphicsEngine());
     debug("GraphicsEngine() successful");
 #endif
 
-    eventEngine = std::shared_ptr<EventEngine>(new EventEngine());
-
 #ifdef __DEBUG
+    eventEngine = std::shared_ptr<EventEngine>(new EventEngine());
     debug("EventEngine() successful");
 #endif
-
-    physicsEngine = std::shared_ptr<PhysicsEngine>(new PhysicsEngine());
-
-#ifdef __DEBUG
-    debug("PhysicsEngine() successful");
-#endif
-
 
 }
 
@@ -55,9 +54,10 @@ XCube2Engine::~XCube2Engine()
     debug("XCube2Engine::~XCube2Engine() started");
 #endif
 
+#ifdef __DEBUG
     graphicsEngine.reset();
     eventEngine.reset();
-    physicsEngine.reset();
+#endif
 
 #ifdef __DEBUG
     debug("XCube2Engine::~XCube2Engine() finished");
