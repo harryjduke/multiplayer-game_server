@@ -8,10 +8,23 @@
 
 #ifndef NETWORKENGINE_H
 #define NETWORKENGINE_H
+#include <unordered_map>
+#include <vector>
 
 class NetworkEngine {
     friend class XCube2Engine;
 
+public:
+    uint64_t registerReplicatedObject(const std::vector<void*>& replicatedProperties);
+
+    [[nodiscard]] std::unordered_map<uint64_t, std::vector<void*>> getReplicatedObjects() const;
+
+    void unregisterReplicatedObject(uint64_t objectID);
+
+
+private:
+    uint64_t nextReplicatedObjectID = 0;
+    std::unordered_map<uint64_t, std::vector<void*>> replicatedObjects{};
 };
 
 #endif //NETWORKENGINE_H

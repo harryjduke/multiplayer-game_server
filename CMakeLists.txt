@@ -34,6 +34,8 @@ endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
+find_package(GTest CONFIG REQUIRED)
+
 
 # --- SUBDIRECTORIES ---
 add_subdirectory(engine)

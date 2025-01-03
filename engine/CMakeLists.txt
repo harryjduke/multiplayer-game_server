@@ -11,6 +11,7 @@ add_library(Engine
         src/GraphicsEngine.cpp
         include/GraphicsEngine.h
         include/NetworkEngine.h
+        src/NetworkEngine.cpp
 )
 
 # Specify the include directories for the 'Engine' target
@@ -27,3 +28,17 @@ target_link_libraries(Engine
 # Define __DEBUG macro for Debug builds
 target_compile_definitions(Engine PUBLIC $<$<CONFIG:Debug>:__DEBUG>)
 
+# Engine Tests
+enable_testing()
+
+add_executable(UnitTests
+        include/NetworkEngine.test.cpp
+)
+
+target_link_libraries(UnitTests
+        GTest::gtest_main
+        Engine
+)
+
+include(GoogleTest)
+gtest_discover_tests(UnitTests)
