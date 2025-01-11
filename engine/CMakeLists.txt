@@ -23,6 +23,7 @@ target_link_libraries(Engine
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
         $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+        msgpack-cxx
 )
 
 # Define __DEBUG macro for Debug builds
@@ -32,7 +33,7 @@ target_compile_definitions(Engine PUBLIC $<$<CONFIG:Debug>:__DEBUG>)
 enable_testing()
 
 add_executable(UnitTests
-        include/NetworkEngine.test.cpp
+        tests/NetworkEngine.test.cpp
 )
 
 target_link_libraries(UnitTests
