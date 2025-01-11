@@ -16,7 +16,7 @@ endif ()
 
 # Setup project
 project(multiplayer-game_server)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
 # Setup server
@@ -35,6 +35,7 @@ endif ()
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
+find_package(msgpack-cxx CONFIG REQUIRED)
 
 
 # --- SUBDIRECTORIES ---
