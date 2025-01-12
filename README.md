@@ -20,8 +20,8 @@ You can also follow the [vcpkg] instructions for [Windows](#windows) on other pl
 
 1. **Clone the Repository:**
     ```shell
-    git clone https://github.com/harryjduke/.git
-    cd multipler-game_server
+    git clone https://github.com/harryjduke/multiplayer-game_server.git
+    cd multiplayer-game_server
     ``` 
 2. **Install prerequisites**
     - [Install Git](https://git-scm.com/downloads/win) if not already installed.

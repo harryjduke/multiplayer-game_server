@@ -1,8 +1,8 @@
 # Create the server executable target
 add_executable(${SERVER_NAME}
         src/main.cpp
-        src/server.cpp
-        src/server.h)
+        src/Server.cpp
+        src/Server.h)
 
 # Specify the include directories for the server target
 target_include_directories(${SERVER_NAME} PRIVATE include)
