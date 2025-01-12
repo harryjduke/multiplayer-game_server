@@ -51,7 +51,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y autoconf automake libtool pkg-config make ninja-build
+        sudo apt-get install -y build-essential
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -100,5 +100,5 @@ jobs:
     - name: Display vcpkg logs
       if: failure()
       run: |
-        cat /home/runner/work/multiplayer-game_server/multiplayer-game_server/vcpkg/buildtrees/libxcrypt/autoconf-x64-linux-*.log
-        vcpkg version
+        cat /home/runner/work/multiplayer-game_server/multiplayer-game_server/vcpkg/buildtrees/libxcrypt/autoconf-x64-linux-out.log
+        cat /home/runner/work/multiplayer-game_server/multiplayer-game_server/vcpkg/buildtrees/libxcrypt/autoconf-x64-linux-err.log
