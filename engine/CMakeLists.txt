@@ -14,6 +14,9 @@ add_library(Engine
         src/NetworkEngine.cpp
         include/Replicatable.h
         include/Replicated.h
+        include/NetworkProtocol.h
+        include/TCPNetworkProtocol.h
+        src/TcpNetworkProtocol.cpp
 )
 
 # Specify the include directories for the 'Engine' target
@@ -25,6 +28,7 @@ target_link_libraries(Engine
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
         $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+        $<IF:$<TARGET_EXISTS:SDL2_net::SDL2_net>,SDL2_net::SDL2_net,SDL2_net::SDL2_net-static>
         msgpack-cxx
 )
 

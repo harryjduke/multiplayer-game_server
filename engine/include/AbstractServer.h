@@ -37,9 +37,12 @@ public:
 #ifdef __DEBUG
 private:
     void handleMouseEvents();
+#endif
 
 protected:
     /* Engine systems */
+    std::shared_ptr<NetworkEngine> networkEngine;
+#ifdef __DEBUG
     std::shared_ptr<GraphicsEngine> graphicsEngine;
     std::shared_ptr<EventEngine> eventEngine;
 

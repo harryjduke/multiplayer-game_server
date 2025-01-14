@@ -1,6 +1,5 @@
 // This file is part of multiplayer-game_server <https://github.com/harryjduke/multiplayer-game_server>.
 // Copyright (c) 2025 Harry Duke <harryjduke@gmail.com>
-// This file includes modifications made by Harry Duke.
 //
 // This program is distributed under the terms of the GNU General Public License version 2.
 // You should have received a copy of the GNU General Public License along with this program.
@@ -8,6 +7,24 @@
 
 
 #include "NetworkEngine.h"
+
+//NetworkEngine::NetworkEngine() : NetworkEngine(std::make_unique<INetworkPort>()) {}
+
+NetworkEngine::NetworkEngine(std::unique_ptr<INetworkProtocol> networkPort) : networkPort_(std::move(networkPort)) {
+}
+
+void NetworkEngine::update() {
+    while (const auto message = networkPort_->recieve()) {
+        if(std::ranges::find(players_, message->clientId) == players_.end()) {
+            players_.push_back(message->clientId);
+        }
+    }
+
+    const std::vector<uint8_t> gameState = getReplicatedObjectsSerialized();
+    for (const auto playerClientId: players_) {
+        networkPort_->send({playerClientId, gameState});
+    }
+}
 
 void NetworkEngine::registerReplicatedObject(IReplicatable* object) {
     if (!object) {
@@ -69,8 +86,8 @@ struct adaptor::pack<std::unordered_map<TypeId, std::vector<IReplicatable*>>> {
 } // MSGPACK_API_VERSION_NAMESPACE(MSGPACK_DEFAULT_API_NS)
 } // namespace msgpack
 
-msgpack::sbuffer NetworkEngine::getReplicatedObjectsSerialized() const {
+std::vector<uint8_t> NetworkEngine::getReplicatedObjectsSerialized() const {
     msgpack::sbuffer buffer;
     msgpack::pack(buffer, replicatedObjects_);
-    return buffer;
+    return {buffer.data(), buffer.data() + buffer.size()};
 }

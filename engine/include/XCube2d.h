@@ -50,6 +50,8 @@ public:
     static std::shared_ptr<XCube2Engine> getInstance();
     ~XCube2Engine();
 
+    std::shared_ptr<NetworkEngine> getNetworkEngine() {return networkEngine;}
+
 #ifdef __DEBUG
     /** @return The graphics engine subsystem instance */
     std::shared_ptr<GraphicsEngine> getGraphicsEngine() {return graphicsEngine;}

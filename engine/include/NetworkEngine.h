@@ -1,6 +1,5 @@
 // This file is part of multiplayer-game_server <https://github.com/harryjduke/multiplayer-game_server>.
 // Copyright (c) 2024 Harry Duke <harryjduke@gmail.com>
-// This file includes modifications made by Harry Duke.
 //
 // This program is distributed under the terms of the GNU General Public License version 2.
 // You should have received a copy of the GNU General Public License along with this program.
@@ -13,6 +12,7 @@
 #include <unordered_map>
 
 #include "Replicatable.h"
+#include "NetworkProtocol.h"
 
 /**
  * Manages the network replication of game objects.
@@ -32,6 +32,10 @@
 class NetworkEngine {
     friend class XCube2Engine;
 public:
+    explicit NetworkEngine(std::unique_ptr<INetworkProtocol> networkPort);
+
+    void update();
+
     /**
      * Registers a replicatable object for network replication.
      *
@@ -74,13 +78,19 @@ public:
      * @return msgpack buffer containing serialized object data
      * @see IReplicatable::msgpack_pack for individual object serialization
      */
-    [[nodiscard]] msgpack::sbuffer getReplicatedObjectsSerialized() const;
+    [[nodiscard]] std::vector<uint8_t> getReplicatedObjectsSerialized() const;
+
+    [[nodiscard]] std::vector<ClientId> getPlayers() const { return players_; }
 
 private:
     // NetworkEngine tracks but does not own these objects.
     // Objects must unregister themselves before destruction.
     std::unordered_map<TypeId, std::vector<IReplicatable*>> replicatedObjects_{};
     InstanceId nextReplicatedObjectInstanceId_{1};
+
+    std::unique_ptr<INetworkProtocol> networkPort_;
+    std::vector<ClientId> players_{};
+
 };
 
 #endif //NETWORKENGINE_H

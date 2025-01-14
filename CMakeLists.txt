@@ -34,6 +34,7 @@ endif ()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
+find_package(SDL2_net CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 find_package(msgpack-cxx CONFIG REQUIRED)
 

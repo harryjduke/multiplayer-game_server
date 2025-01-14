@@ -15,6 +15,8 @@
 
 #include "../include/XCube2d.h"
 #include <iostream>
+
+#include "TcpNetworkProtocol.h"
 #include "utils/EngineCommon.h"
 
 using namespace std;
@@ -35,6 +37,10 @@ XCube2Engine::XCube2Engine()
         #endif
     #endif
 
+    networkEngine = std::make_shared<NetworkEngine>(std::make_unique<TcpNetworkProtocol>());
+#ifdef __DEBUG
+    debug("NetworkEngine() successful");
+#endif
 
 #ifdef __DEBUG
     graphicsEngine = std::shared_ptr<GraphicsEngine>(new GraphicsEngine());
@@ -54,6 +60,7 @@ XCube2Engine::~XCube2Engine()
     debug("XCube2Engine::~XCube2Engine() started");
 #endif
 
+    networkEngine.reset();
 #ifdef __DEBUG
     graphicsEngine.reset();
     eventEngine.reset();

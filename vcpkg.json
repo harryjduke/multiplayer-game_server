@@ -9,6 +9,9 @@
       "name": "sdl2-image"
     },
     {
+      "name": "sdl2-net"
+    },
+    {
       "name": "gtest"
     },
     {

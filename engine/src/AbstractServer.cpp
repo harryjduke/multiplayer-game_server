@@ -21,6 +21,7 @@ AbstractServer::AbstractServer() : running(true), paused(false), serverTime(0.0)
 {
     const std::shared_ptr<XCube2Engine> engine = XCube2Engine::getInstance();
 
+    networkEngine = engine->getNetworkEngine();
 #ifdef __DEBUG
     graphicsEngine = engine->getGraphicsEngine();
     eventEngine = engine->getEventEngine();
@@ -74,6 +75,7 @@ int AbstractServer::runMainLoop() {
         if (!paused) {
             constexpr float deltaTime = 0.016;	// 60 times a sec
             update(deltaTime);
+            networkEngine->update();
             serverTime += deltaTime;
         }
 

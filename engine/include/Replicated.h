@@ -45,9 +45,6 @@
  * };
  * @endcode
  *
- * `static constexpr typeId` member set to a unique string identifyer with public visibility, e.g.:
- * `static contexpr typeId{"ReplicatedObject"}`. Classes derrived from this class must also use the `MSGPACK_DEFINE()`
- * macro with members intended for replication passed as parameters, e.g.: `MSGPACK_DEFINE(exampleBool, exampleInt);`
  * @tparam Derived The derived class type. Must be the same type as the derived class
  *                 (@code class Derived : Replicatable<Derived> @endcode)
  */
