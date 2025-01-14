@@ -10,6 +10,7 @@
 #include <msgpack.hpp>
 
 #include "NetworkEngine.h"
+#include "Replicated.h"
 
 class NetworkEngineTest : public testing::Test {
 protected:
@@ -24,10 +25,10 @@ protected:
     std::unique_ptr<NetworkEngine> networkEngine;
 };
 
-class TestObject : public Replicatable<TestObject> {
+class TestObject final : public Replicated<TestObject> {
 public:
     explicit TestObject(NetworkEngine &networkEngine)
-        : Replicatable(networkEngine) {
+        : Replicated(networkEngine) {
     }
 
     void setTestBool(const bool newTestBool) {
@@ -45,10 +46,10 @@ private:
     bool testBool{};
 };
 
-class TestObjectInt : public Replicatable<TestObjectInt> {
+class TestObjectInt final : public Replicated<TestObjectInt> {
 public:
     explicit TestObjectInt(NetworkEngine &networkEngine)
-        : Replicatable(networkEngine) {
+        : Replicated(networkEngine) {
     }
 
     void setTestInt(const int newTestInt) {
@@ -70,7 +71,7 @@ TEST_F(NetworkEngineTest, CreateReplicatedObect) {
     auto testObject = std::make_unique<TestObject>(*networkEngine);
 
     std::vector<IReplicatable*> replicatedTestObjects;
-    ASSERT_NO_THROW(replicatedTestObjects = networkEngine->getReplicatedObjects().at(Replicatable<TestObject>::typeId()););
+    ASSERT_NO_THROW(replicatedTestObjects = networkEngine->getReplicatedObjects().at(Replicated<TestObject>::typeId()););
     ASSERT_EQ(replicatedTestObjects.size(), 1);
     const auto testObjectCast = dynamic_cast<TestObject*>(replicatedTestObjects[0]);
     ASSERT_NE(testObjectCast, nullptr);
@@ -85,13 +86,13 @@ TEST_F(NetworkEngineTest, CreateTwoReplicatedObjects) {
     auto replicatedObjects = networkEngine->getReplicatedObjects();
 
     std::vector<IReplicatable*> replicatedTestObjects;
-    ASSERT_NO_THROW(replicatedTestObjects = replicatedObjects.at(Replicatable<TestObject>::typeId()););
+    ASSERT_NO_THROW(replicatedTestObjects = replicatedObjects.at(Replicated<TestObject>::typeId()););
     const auto testObject0Cast = dynamic_cast<TestObject*>(replicatedTestObjects[0]);
     ASSERT_NE(testObject0Cast, nullptr);
     ASSERT_FALSE(testObject0Cast->getTestBool());
 
     std::vector<IReplicatable*> replicatedTestObjectInts;
-    ASSERT_NO_THROW(replicatedTestObjectInts = replicatedObjects.at(Replicatable<TestObjectInt>::typeId()););
+    ASSERT_NO_THROW(replicatedTestObjectInts = replicatedObjects.at(Replicated<TestObjectInt>::typeId()););
     const auto testObject1Cast = dynamic_cast<TestObjectInt*>(replicatedTestObjectInts[0]);
     ASSERT_NE(testObject1Cast, nullptr);
     ASSERT_EQ(testObject1Cast->getTestInt(), 1);

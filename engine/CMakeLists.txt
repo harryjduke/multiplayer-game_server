@@ -12,6 +12,8 @@ add_library(Engine
         include/GraphicsEngine.h
         include/NetworkEngine.h
         src/NetworkEngine.cpp
+        include/Replicatable.h
+        include/Replicated.h
 )
 
 # Specify the include directories for the 'Engine' target
